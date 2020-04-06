@@ -6,7 +6,7 @@ def pytest_addoption(parser):
     parser.addoption('--language', action='store', default='en', help='Specify language')
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture(scope="session")
 def browser(request):
     browser_name = request.config.getoption("browser_name")
     language = request.config.getoption('language')
@@ -17,6 +17,7 @@ def browser(request):
     elif browser_name == "firefox":
         print("\nstart firefox browser for test..")
         browser = webdriver.Firefox()
+
     else:
         raise pytest.UsageError("--browser_name should be chrome or firefox")
     yield browser
